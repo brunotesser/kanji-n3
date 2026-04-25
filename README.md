@@ -1,193 +1,220 @@
-# 2026appnihongo
+<div align="center">
 
-Aplicativo iOS para estudo de japonês JLPT N3/N4/N5 com sistema SRS (Spaced Repetition System).  
-Desenvolvido com Capacitor v8 + HTML/CSS/JS puro, sem frameworks externos.
+# 漢字アプリ N3
 
----
-
-## Stack
-
-- **Frontend**: HTML + CSS + JavaScript puro (single-file app em `www/index.html`)
-- **iOS wrapper**: Capacitor v8.3.1
-- **Dados**: Arrays e objetos JS embutidos no app (sem backend, 100% offline)
-- **Build**: Xcode via `npx cap sync ios`
+**Learn Japanese from N5 to N3 — radicals, kanji and vocabulary with spaced repetition**  
+Aprenda japonês do N5 ao N3 — radicais, kanji e vocabulário com repetição espaçada  
+部首・漢字・語彙をSRSで学ぶ — N5からN3まで
 
 ---
 
-## Estrutura do projeto
+![iOS](https://img.shields.io/badge/iOS-16%2B-black?style=flat-square&logo=apple)
+![Capacitor](https://img.shields.io/badge/Capacitor-v8-4A90E2?style=flat-square)
+![Vanilla JS](https://img.shields.io/badge/Vanilla-JS-F7DF1E?style=flat-square&logo=javascript)
+![Offline](https://img.shields.io/badge/100%25-Offline-00b894?style=flat-square)
+![Vocab](https://img.shields.io/badge/2113%2B-vocab_entries-9b59b6?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-brightgreen?style=flat-square)
+
+</div>
+
+---
+
+## What is this? · O que é? · これは何？
+
+An **iOS app** to study Japanese the structured way — starting from radicals, building up to kanji, then mastering 2113+ vocabulary words from JLPT N3.
+
+Inspired by WaniKani's unlock system. **100% offline, free, open source.**
+
+> **PT-BR:** App iOS para estudar japonês do zero ao N3. Começa pelos radicais, sobe para kanji, chega no vocabulário. Sistema SRS próprio. Sem internet, sem assinatura, sem paywall.  
+> **日本語:** 部首から始め、漢字を習得し、N3語彙2113語以上をマスターするiOSアプリ。独自SRS搭載・完全オフライン・無料・オープンソース。
+
+---
+
+## Learning path · Trilha · 学習パス
 
 ```
-2026kanji-app/
-├── www/
-│   ├── index.html      # App completo (~303KB após split)
-│   ├── vocab-db.js     # VOCAB_DB separado (~192KB, 2113+ entradas)
-│   └── images/         # Assets
-├── ios/                # Projeto Xcode gerado pelo Capacitor
-├── capacitor.config.json
-└── package.json
+  部首 Radicals          漢字 Kanji            語彙 Vocabulary
+ ──────────────    ──────────────────    ──────────────────────
+  Learn the         Build from            Master words built
+  building blocks   radical parts         from known kanji
+  of every kanji    N5 → N4 → N3          2113+ N3 entries
+
+  🔵 Radical        🔴 Kanji              🟣 Vocab
+  unlocks ──────▶   unlocks ──────────▶   SRS levels up
 ```
 
----
-
-## Bases de dados
-
-### RADICAL_DB
-- Radicais japoneses com significado, leituras e mnemônicos visuais
-- Campos: `id`, `char`, `read`, `mean`, `mnemonic`
-
-### KANJI_DB
-- Kanjis N5/N4/N3 com radicais componentes e vocabulário vinculado
-- Campos: `char`, `read[]`, `mean`, `radicals[]`, `vocab[]`
-- Mnemônicos de pronúncia em `KANJI_SOUND_MNEMONICS`
-- Mnemônicos de significado em `KANJI_MNEMONICS`
-
-### VOCAB_DB (`www/vocab-db.js`)
-- **2113 entradas** de vocabulário JLPT N3 (Nihongo no Mori)
-- IDs: `v1` – `v2113` + patches `v9001`–`v9005`
-- Campos: `id`, `word`, `read`, `mean`
-- Categorias cobertas:
-  - 名詞（テーマ別）— substantivos temáticos
-  - カタカナ語 — palavras em katakana
-  - 接続詞 — conjunções (17 itens)
-  - 接尾語 — sufixos (187 itens)
-  - 接頭語 — prefixos (30 itens)
-  - 慣用表現 — expressões idiomáticas (28 itens)
-  - 敬語表現 — linguagem formal/keigo (47 itens)
-  - 数え方 — contadores (39 itens)
-  - 動詞（一般）— verbos gerais (290 itens)
-  - い形容詞 / な形容詞 — adjetivos
-
-### VOCAB_SENTENCES
-- Frases de exemplo em japonês com furigana e tradução em PT-BR
-- Keyed por `word` (ex: `VOCAB_SENTENCES['安心']`)
+Every kanji is composed of radicals. Every vocab word uses known kanji.  
+**Master the parts first — the rest unlocks automatically.**
 
 ---
 
-## Sistema SRS
+## Screens · Telas · 画面
 
-Implementação própria de Spaced Repetition para três tipos de item:
+### 🏠 Home Screen
 
-| Tipo | Função lessons | Função reviews |
-|------|---------------|----------------|
-| Radical | `getRadicalLessons()` | `getRadicalReviews()` |
-| Kanji | `getKanjiLessons()` | `getKanjiReviews()` |
-| Vocab | `getVocabLessons()` | `getVocabReviews()` |
-
-Estado salvo em `localStorage`:
-- `ks_<char>` — estado de kanji (`{learned, srs, nextReview, mnemonic}`)
-- `rs_<id>` — estado de radical
-- `vs_<id>` — estado de vocab
-
-### Fluxo de desbloqueio
-- Radicais desbloqueiam Kanji
-- Kanji desbloqueiam Vocab (via `VOCAB_PARENT_MAP`)
-
-```js
-// VOCAB_PARENT_MAP — lookup O(1) para isVocabUnlocked
-const VOCAB_PARENT_MAP = new Map();
-KANJI_DB.forEach(k => k.vocab.forEach(vid => VOCAB_PARENT_MAP.set(vid, k.char)));
+```
+╔══════════════════════════════╗
+║  🔥 12  dias · days · 日     ║  ← streak bar
+║              best: 21        ║
+╠══════════════════════════════╣
+║                              ║
+║   ↺  Revisar · Review (8)   ║  ← gold hero button
+║      8 reviews pending       ║    (Review / Learn / ✓ All good)
+║                              ║
+╠══════╦═══════╦═══════╦═══════╣
+║  3   ║  0    ║  2    ║  6    ║
+║ hoje ║radical║ kanji ║ vocab ║  ← lessons available
+║ today║  🔵   ║  🔴   ║  🟣   ║
+╠══════╩═══════╩═══════╩═══════╣
+║  [RADICAIS]  [KANJI]  [VOCAB]║  ← browse tabs
+║──────────────────────────────║
+║  一  二  三  四  五  六  七  ║
+║  八  九  十  口  日  月  木  ║
+║  火  水  金  土  山  川  田  ║
+╚══════════════════════════════╝
 ```
 
 ---
 
-## Tela inicial (Home)
+### 📖 Lesson · Lição · レッスン
 
-- **Streak bar** — dias consecutivos de estudo
-- **Hero button** — botão principal que mostra a ação prioritária:
-  - `↺ Revisar (N)` — quando há reviews pendentes (cor: dourado)
-  - `＋ Aprender (N)` — quando há lições novas (cor: gradiente)
-  - `✓ Tudo em dia` — quando não há nada pendente
-- **Stats row** — cards de radicais / kanji / vocab disponíveis
-- **Browse panels** — abas para navegar todo o conteúdo
+Three steps per item — see, reveal, absorb:
 
-```js
-function heroAction() {
-  const rRev = getRadicalReviews().length + getKanjiReviews().length + getVocabReviews().length;
-  const allLes = getRadicalLessons().length + getKanjiLessons().length + getVocabLessons().length;
-  if (rRev > 0) startAllReviews();
-  else if (allLes > 0) startLessonType('all');
-}
+```
+  Step 1 · Etapa 1           Step 2 · Etapa 2          Step 3 · Etapa 3
+ ╔═══════════════════╗      ╔═══════════════════╗      ╔═══════════════════╗
+ ║                   ║      ║   fire · 火 · 불  ║      ║  火山 (かざん)    ║
+ ║        火         ║ ───▶ ║   か · ひ · カ    ║ ───▶ ║  volcano · 火山   ║
+ ║                   ║      ║                   ║      ║                   ║
+ ║    [ Reveal ]     ║      ║  [ Continue ]     ║      ║  🧠 AI mnemonic   ║
+ ╚═══════════════════╝      ╚═══════════════════╝      ╚═══════════════════╝
+   Kanji shown first          Reading + meaning          Real sentences +
+   何? What is this?          revealed                   AI-generated story
 ```
 
 ---
 
-## Cards de lição (vocab)
+### 🔁 Review · Revisão · 復習
 
-Três passos por item:
-
-1. **Passo 0** — Mostra o kanji/palavra, usuário tenta lembrar
-2. **Passo 1** — Revela leitura (furigana) + significado
-3. **Passo 2** — Frases de exemplo (de `VOCAB_SENTENCES`) + mnemônico gerado por IA
-
-### Geração de mnemônico por IA
-
-```js
-async function generateVocabMn(vocabId) {
-  // Chama Anthropic API claude-haiku
-  // Salva resultado em state.vocab[vocabId].mnemonic
-  // Persiste no localStorage via vs_<id>
-}
+```
+╔══════════════════════════════╗
+║                              ║
+║           火山               ║  ← word shown
+║                              ║
+║  What is the reading?        ║
+║  Qual é a leitura?           ║
+║  読み方は？                  ║
+║                              ║
+║  ╔════════════════════╗      ║
+║  ║  かざん           ░║      ║  ← type answer
+║  ╚════════════════════╝      ║
+║                              ║
+║  ✓ correct → SRS advances   ║
+║  ✗ wrong  → back to start   ║
+╚══════════════════════════════╝
 ```
 
 ---
 
-## Cards de review (vocab)
+### 📊 SRS Levels · Níveis · レベル
 
-Após o usuário responder, exibe:
-- Frase de exemplo do `VOCAB_SENTENCES` (se disponível)
-- Mnemônico salvo (se existir)
+```
+  New ──▶ [1] ──▶ [2] ──▶ [3] ──▶ [4] ──▶ [5] ──▶ Burned 🔥
+           4h      8h      1d      2d      1w
+                   Apprentice       Guru     Master  Enlightened
+```
+
+Correct answer → advance. Wrong answer → reset.  
+The app schedules your next review automatically — you just show up.
+
+> **PT:** Cada acerto avança. Cada erro reinicia. O app agenda a próxima revisão automaticamente.  
+> **JP:** 正解で進み、不正解でリセット。次の復習は自動でスケジューリング。
 
 ---
 
-## Otimizações de performance iOS
+## Database · Base de dados · データ
 
-### Problema
-O iOS WebView (WKWebView) tem um timeout de 3 segundos para processar eventos de toque. Scripts inline grandes causam o erro:
-```
-Result accumulator timeout: 3.000000, exceeded
-```
+| Collection | Entries | Notes |
+|---|---|---|
+| `RADICAL_DB` | N5/N4/N3 | Visual mnemonics, readings, meanings |
+| `KANJI_DB` | N5 → N3 | Linked to radicals + vocab |
+| `VOCAB_DB` | **2113+** | Source: Nihongo no Mori N3 |
+| `VOCAB_SENTENCES` | Per word | Furigana + PT-BR translation |
 
-### Soluções aplicadas
-
-1. **Split do VOCAB_DB** — movido de `index.html` para `www/vocab-db.js` (arquivo separado)
-   - Script inline: 495KB → 303KB
-   - `<script src="vocab-db.js"></script>` carregado antes do script principal
-
-2. **VOCAB_PARENT_MAP** — substituiu `KANJI_DB.find()` O(n²) por Map O(1)
-
-3. **Paginação do vocab** — `renderVocab()` renderiza 80 itens por vez com botão "Ver mais"
-
-4. **Init diferida** — `updateCounts()` roda após `requestAnimationFrame + setTimeout(50ms)`
-
-5. **Removido `overflow:hidden`** do container `#home` — bug iOS WebKit que bloqueia propagação de touch events em flex containers
+Categories in `VOCAB_DB`:
+`名詞` `カタカナ語` `接続詞 (17)` `接尾語 (187)` `接頭語 (30)` `慣用表現 (28)` `敬語 (47)` `数え方 (39)` `動詞 (290)` `い形容詞` `な形容詞`
 
 ---
 
-## Build e deploy
+## Tech · Stack · 技術
+
+```
+iOS Wrapper     Capacitor v8.3.1
+Frontend        HTML + CSS + Vanilla JS  (no framework — iOS WKWebView 3s timeout)
+Storage         localStorage  (100% offline, zero backend)
+AI Mnemonics    Anthropic API — claude-sonnet  (optional, BYO key)
+Build tool      Xcode via npx cap sync ios
+App ID          com.vini.kanjin3
+```
+
+**Why Vanilla JS?**  
+iOS WKWebView enforces a 3-second script parse timeout. A single vanilla file is faster to parse than any React/Vue bundle on constrained memory devices.
+
+---
+
+## Run it · Como rodar · 動かし方
 
 ```bash
-# Instalar dependências
+# Clone
+git clone https://github.com/brunotesser/kanji-n3.git
+cd kanji-n3
+
+# Install
 npm install
 
-# Sincronizar com iOS após alterar www/
-npx cap sync ios
+# Preview in browser
+open www/index.html
 
-# Abrir no Xcode
+# Run on iPhone
+npx cap sync ios
 npx cap open ios
+# Xcode → Product → Run (⌘R) on physical device
 ```
 
-Depois: **Xcode → Product → Run** (⌘R) no dispositivo físico.
+**AI mnemonics** require an Anthropic API key. Add it as `'x-api-key': 'YOUR_KEY'` in the fetch headers inside `generateMnemonic()` in `www/index.html`. Without it, the app works fully — mnemonics just won't auto-generate.
 
 ---
 
-## Variáveis de ambiente
+## Contributing · Contribuindo · 貢献
 
-Nenhuma variável de ambiente necessária para o app funcionar offline.  
-A geração de mnemônicos por IA usa a Anthropic API — a chave é inserida diretamente na função `generateVocabMn` no `index.html`.
+PRs welcome, especially:
+
+- 🈶 **More vocab** — N2/N1 entries
+- 🧠 **Better mnemonics** — visual stories for kanji/radicals  
+- 📱 **Android** — Capacitor supports it, needs testing
+- 🌐 **English UI** — currently PT-BR first
+- 🐛 **Bug reports** — open an issue
+
+```bash
+git checkout -b feat/your-contribution
+# make changes → open PR
+```
 
 ---
 
-## Fontes dos dados
+## License
 
-- Vocabulário N3: [Nihongo no Mori — JLPT N3](https://www.youtube.com/@nihongonomori2013)
-- Radicais e Kanji: compilação própria baseada em N5/N4/N3
+MIT — free to use, modify, redistribute.
+
+---
+
+<div align="center">
+
+Built in Tokyo · 東京 · Tóquio  
+**[Bruno Tesser](https://brunotesser.jp)** · [@brunotesserjapao](https://www.youtube.com/@brunotesserjapao)
+
+*"The best time to start studying kanji was yesterday. The second best time is now."*  
+「漢字の勉強を始める最良のタイミングは昨日。次は今。」  
+*"O melhor momento para começar a estudar kanji foi ontem. O segundo melhor é agora."*
+
+</div>
