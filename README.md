@@ -3,8 +3,8 @@
 # 漢字アプリ N3
 
 **Learn Japanese from N5 to N3 — radicals, kanji and vocabulary with spaced repetition**  
-Aprenda japonês do N5 ao N3 — radicais, kanji e vocabulário com repetição espaçada  
-部首・漢字・語彙をSRSで学ぶ — N5からN3まで
+
+語彙・部首・SRS — N5 to N3
 
 ---
 
@@ -19,18 +19,15 @@ Aprenda japonês do N5 ao N3 — radicais, kanji e vocabulário com repetição 
 
 ---
 
-## What is this? · O que é? · これは何？
+## What is this?
 
 An **iOS app** to study Japanese the structured way — starting from radicals, building up to kanji, then mastering 2113+ vocabulary words from JLPT N3.
 
 Inspired by WaniKani's unlock system. **100% offline, free, open source.**
 
-> **PT-BR:** App iOS para estudar japonês do zero ao N3. Começa pelos radicais, sobe para kanji, chega no vocabulário. Sistema SRS próprio. Sem internet, sem assinatura, sem paywall.  
-> **日本語:** 部首から始め、漢字を習得し、N3語彙2113語以上をマスターするiOSアプリ。独自SRS搭載・完全オフライン・無料・オープンソース。
-
 ---
 
-## Learning path · Trilha · 学習パス
+## Learning path · 学習パス
 
 ```
   部首 Radicals          漢字 Kanji            語彙 Vocabulary
@@ -48,25 +45,25 @@ Every kanji is composed of radicals. Every vocab word uses known kanji.
 
 ---
 
-## Screens · Telas · 画面
+## Screens · 画面
 
 ### 🏠 Home Screen
 
 ```
 ╔══════════════════════════════╗
-║  🔥 12  dias · days · 日     ║  ← streak bar
+║  🔥 12  days · 日            ║  ← streak bar
 ║              best: 21        ║
 ╠══════════════════════════════╣
 ║                              ║
-║   ↺  Revisar · Review (8)   ║  ← gold hero button
+║   ↺  Review (8)             ║  ← gold hero button
 ║      8 reviews pending       ║    (Review / Learn / ✓ All good)
 ║                              ║
 ╠══════╦═══════╦═══════╦═══════╣
 ║  3   ║  0    ║  2    ║  6    ║
-║ hoje ║radical║ kanji ║ vocab ║  ← lessons available
-║ today║  🔵   ║  🔴   ║  🟣   ║
+║today ║radical║ kanji ║ vocab ║  ← lessons available
+║      ║  🔵   ║  🔴   ║  🟣   ║
 ╠══════╩═══════╩═══════╩═══════╣
-║  [RADICAIS]  [KANJI]  [VOCAB]║  ← browse tabs
+║ [RADICALS]  [KANJI]  [VOCAB] ║  ← browse tabs
 ║──────────────────────────────║
 ║  一  二  三  四  五  六  七  ║
 ║  八  九  十  口  日  月  木  ║
@@ -76,12 +73,12 @@ Every kanji is composed of radicals. Every vocab word uses known kanji.
 
 ---
 
-### 📖 Lesson · Lição · レッスン
+### 📖 Lesson · レッスン
 
 Three steps per item — see, reveal, absorb:
 
 ```
-  Step 1 · Etapa 1           Step 2 · Etapa 2          Step 3 · Etapa 3
+  Step 1                     Step 2                    Step 3
  ╔═══════════════════╗      ╔═══════════════════╗      ╔═══════════════════╗
  ║                   ║      ║   fire · 火 · 불  ║      ║  火山 (かざん)    ║
  ║        火         ║ ───▶ ║   か · ひ · カ    ║ ───▶ ║  volcano · 火山   ║
@@ -94,7 +91,7 @@ Three steps per item — see, reveal, absorb:
 
 ---
 
-### 🔁 Review · Revisão · 復習
+### 🔁 Review · 復習
 
 ```
 ╔══════════════════════════════╗
@@ -102,7 +99,6 @@ Three steps per item — see, reveal, absorb:
 ║           火山               ║  ← word shown
 ║                              ║
 ║  What is the reading?        ║
-║  Qual é a leitura?           ║
 ║  読み方は？                  ║
 ║                              ║
 ║  ╔════════════════════╗      ║
@@ -116,7 +112,7 @@ Three steps per item — see, reveal, absorb:
 
 ---
 
-### 📊 SRS Levels · Níveis · レベル
+### 📊 SRS Levels · レベル
 
 ```
   New ──▶ [1] ──▶ [2] ──▶ [3] ──▶ [4] ──▶ [5] ──▶ Burned 🔥
@@ -127,26 +123,23 @@ Three steps per item — see, reveal, absorb:
 Correct answer → advance. Wrong answer → reset.  
 The app schedules your next review automatically — you just show up.
 
-> **PT:** Cada acerto avança. Cada erro reinicia. O app agenda a próxima revisão automaticamente.  
-> **JP:** 正解で進み、不正解でリセット。次の復習は自動でスケジューリング。
-
 ---
 
-## Database · Base de dados · データ
+## Database · データ
 
 | Collection | Entries | Notes |
 |---|---|---|
 | `RADICAL_DB` | N5/N4/N3 | Visual mnemonics, readings, meanings |
 | `KANJI_DB` | N5 → N3 | Linked to radicals + vocab |
 | `VOCAB_DB` | **2113+** | Source: Nihongo no Mori N3 |
-| `VOCAB_SENTENCES` | Per word | Furigana + PT-BR translation |
+| `VOCAB_SENTENCES` | Per word | Furigana + English translation |
 
 Categories in `VOCAB_DB`:
 `名詞` `カタカナ語` `接続詞 (17)` `接尾語 (187)` `接頭語 (30)` `慣用表現 (28)` `敬語 (47)` `数え方 (39)` `動詞 (290)` `い形容詞` `な形容詞`
 
 ---
 
-## Tech · Stack · 技術
+## Tech · 技術
 
 ```
 iOS Wrapper     Capacitor v8.3.1
@@ -162,7 +155,7 @@ iOS WKWebView enforces a 3-second script parse timeout. A single vanilla file is
 
 ---
 
-## Run it · Como rodar · 動かし方
+## Run it · 動かし方
 
 ```bash
 # Clone
@@ -185,14 +178,13 @@ npx cap open ios
 
 ---
 
-## Contributing · Contribuindo · 貢献
+## Contributing · 貢献
 
 PRs welcome, especially:
 
 - 🈶 **More vocab** — N2/N1 entries
 - 🧠 **Better mnemonics** — visual stories for kanji/radicals  
 - 📱 **Android** — Capacitor supports it, needs testing
-- 🌐 **English UI** — currently PT-BR first
 - 🐛 **Bug reports** — open an issue
 
 ```bash
@@ -210,11 +202,10 @@ MIT — free to use, modify, redistribute.
 
 <div align="center">
 
-Built in Tokyo · 東京 · Tóquio  
+Built in Tokyo · 東京  
 **[Bruno Tesser](https://brunotesser.jp)** · [@brunotesserjapao](https://www.youtube.com/@brunotesserjapao)
 
 *"The best time to start studying kanji was yesterday. The second best time is now."*  
-「漢字の勉強を始める最良のタイミングは昨日。次は今。」  
-*"O melhor momento para começar a estudar kanji foi ontem. O segundo melhor é agora."*
+「漢字の勉強を始める最良のタイミングは昨日。次は今。」
 
 </div>
